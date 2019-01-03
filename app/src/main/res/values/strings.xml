@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">GravityYard</string>
+    <string name="shareBy">分享到</string>
+    <string name="rankingList">排名</string>
+    <string name="dot"> .</string>
+</resources>

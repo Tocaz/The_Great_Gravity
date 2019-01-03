@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF3700</color>
+    <color name="colorPrimaryDark">#DD2300</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="bkTransPrimary">#AAFF3700</color>
+    <color name="bkTransSecondary">#66ffc107</color>
+    <color name="white">#FFF</color>
+</resources>
