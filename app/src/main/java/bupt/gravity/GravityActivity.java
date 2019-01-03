@@ -30,7 +30,7 @@ public class GravityActivity extends AppCompatActivity {
     double x, y, z = 0;
 
     Calculation calc;
-    private Double distance;
+    private double distance = .0;
 
     void onDistanceChanged(double newValue) {
         this.distance = newValue;
@@ -84,8 +84,7 @@ public class GravityActivity extends AppCompatActivity {
         shineButton.setOnClickListener(v->{
             shineButton.setChecked(true, true);
             // TODO: replace string
-            Double distance = this.distance;
-            String htmlString = buildGravityShareHtml(distance);
+                String htmlString = buildGravityShareHtml(this.distance);
             shareGravityResult(htmlString);
         });
     }
@@ -170,7 +169,7 @@ public class GravityActivity extends AppCompatActivity {
 
     private String buildGravityShareHtml(double distance) {
         String head = "<h1>快来和我一起扔手机</h1>";
-        String body = "<p>我扔了整整" + distance + "米远哦！</p>";
+        String body = "<p>我扔了整整" + String.valueOf(distance).substring(0,4) + "米远哦！</p>";
         return  head + body;
     }
 
