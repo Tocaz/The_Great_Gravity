@@ -13,6 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,19 @@ import android.widget.FrameLayout;
 
 import com.sackcentury.shinebuttonlib.ShineButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import xyz.hanks.library.NumberView;
 
 public class GravityActivity extends AppCompatActivity {
@@ -30,7 +45,7 @@ public class GravityActivity extends AppCompatActivity {
     double x, y, z = 0;
 
     Calculation calc;
-    private double distance = .0;
+    private double distance = .00000;
 
     void onDistanceChanged(double newValue) {
         this.distance = newValue;
@@ -155,6 +170,9 @@ public class GravityActivity extends AppCompatActivity {
                     && sheetBehavior.getState() != BottomSheetBehavior.STATE_DRAGGING) {
                 sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             } else {
+                sendNameAndDistance();
+                ArrayList<NameDistanceInfo> rankList = requestRankList();
+                initRankRecyclerView(rankList);
                 sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
@@ -179,5 +197,77 @@ public class GravityActivity extends AppCompatActivity {
         shareIntent.setType("text/html");
         shareIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(htmlString));
         startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.shareBy)));
+    }
+
+    private void initRankRecyclerView(ArrayList<NameDistanceInfo> nameDistanceInfos){
+        RecyclerView rankRecyclerView;
+        RecyclerView.Adapter rankAdapter;
+        RecyclerView.LayoutManager mLayoutManager;
+
+        rankRecyclerView = (RecyclerView) findViewById(R.id.rank_recycler_view);
+        rankRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        rankRecyclerView.setLayoutManager(mLayoutManager);
+        rankAdapter = new RankRecyclerViewAdapter(nameDistanceInfos);
+        rankRecyclerView.setAdapter(rankAdapter);
+    }
+
+    private void sendNameAndDistance(){
+        Intent intent = getIntent();
+        JSONObject json = new JSONObject();
+        if (intent != null) {
+            String username = intent.getStringExtra("username"); // 从Intent当中根据key取得value
+            Log.e("name：", username);
+
+            json = new JSONObject();
+            try {
+                //TODO 接口格式
+                json.put("username", username);
+                json.put("distance", String.valueOf(distance).substring(0,4));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json.toString());
+        Request request = new Request.Builder()
+                .url("http://192.168.0.102:8080/?????")
+                .post(requestBody)
+                .build();
+        //发送请求获取响应
+        try {
+            Response response=okHttpClient.newCall(request).execute();
+            //判断请求是否成功
+            if(response.isSuccessful()){
+                //打印服务端返回结果
+                Log.e("post",response.body().string());
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private ArrayList<NameDistanceInfo> requestRankList(){
+        ArrayList<NameDistanceInfo> nameDistanceInfos = new ArrayList<>();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("http://??????").build();
+        try {
+            Response response = client.newCall(request).execute();//发送请求
+            JSONArray results = new JSONArray(response.body().string());
+            Log.d("get", "result: " + results);
+
+            for(int i=0;i<results.length();i++)
+            {
+                JSONObject jsonObject=results.getJSONObject(i);
+                //TODO 接口格式
+                nameDistanceInfos.add(new NameDistanceInfo(jsonObject.getString("username"), jsonObject.getString("distance")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    return nameDistanceInfos;
     }
 }

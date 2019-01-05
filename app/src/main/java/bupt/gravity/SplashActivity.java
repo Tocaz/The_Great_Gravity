@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.widget.EditText;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
@@ -21,10 +22,15 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void init() {
+        EditText editText = findViewById(R.id.username);
+
         Intent intent = new Intent(this, GravityActivity.class);
         CircularProgressButton btn = findViewById(R.id.btn);
         btn.setOnClickListener(v -> {
             btn.startAnimation();
+
+            String username = editText.getText().toString();
+            intent.putExtra("username", username);
 
             int delayMilllis = 1000;
             Runnable delay = () -> {
