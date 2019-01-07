@@ -22,17 +22,18 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void init() {
+        CircularProgressButton btn = findViewById(R.id.btn);
         EditText editText = findViewById(R.id.username);
 
         Intent intent = new Intent(this, GravityActivity.class);
-        CircularProgressButton btn = findViewById(R.id.btn);
         btn.setOnClickListener(v -> {
             btn.startAnimation();
 
-            String username = editText.getText().toString();
+            String username = editText.getText().toString().trim();
+            if (username.equals("")){ username = "Anonymous User"; }
             intent.putExtra("username", username);
 
-            int delayMilllis = 1000;
+            int delayMillis = 1000;
             Runnable delay = () -> {
                 btn.stopAnimation();
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
@@ -40,11 +41,11 @@ public class SplashActivity extends AppCompatActivity {
                     new Pair<View, String>(btn, "transition")
                 );
                 startActivity(intent, activityOptions.toBundle());
-                finish();
+                btn.resetProgress();
             }; // delay -END-
 
             Handler handler = new Handler();
-            handler.postDelayed(delay, delayMilllis);
+            handler.postDelayed(delay, delayMillis);
         });
     }
 

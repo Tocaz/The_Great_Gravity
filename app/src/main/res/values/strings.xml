@@ -3,4 +3,6 @@
     <string name="shareBy">分享到</string>
     <string name="rankingList">排名</string>
     <string name="dot"> .</string>
+    <string name="namehint">给自己取一个名字</string>
+    <string name="appname">扔手机</string>
 </resources>

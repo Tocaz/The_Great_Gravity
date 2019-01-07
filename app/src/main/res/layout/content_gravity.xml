@@ -87,7 +87,7 @@
                     app:small_shine_offset_angle="20"
                     app:small_shine_color="#CC9999"
                     app:shine_count="8"
-                    app:siShape="@raw/like"/>
+                    app:siShape="@mipmap/baseline_share_white_36dp"/>
 
                 <com.sackcentury.shinebuttonlib.ShineButton
                     android:layout_column="1"
@@ -102,7 +102,7 @@
                     app:btn_color="@android:color/white"
                     app:btn_fill_color="@android:color/white"
                     app:allow_random_color="true"
-                    app:siShape="@raw/smile"/>
+                    app:siShape="@mipmap/baseline_near_me_white_36dp"/>
 
                 <com.sackcentury.shinebuttonlib.ShineButton
                     android:layout_column="2"
@@ -117,7 +117,7 @@
                     app:btn_color="@android:color/white"
                     app:btn_fill_color="@android:color/white"
                     app:allow_random_color="true"
-                    app:siShape="@raw/star"/>
+                    app:siShape="@mipmap/baseline_airplanemode_active_white_36dp"/>
             </GridLayout>
 
         </FrameLayout>

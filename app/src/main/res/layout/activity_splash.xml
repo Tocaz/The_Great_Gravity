@@ -4,10 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bkTransPrimary"
     tools:context=".SplashActivity">
 
+    <com.ocnyang.contourview.ContourView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_background"
+        app:contour_style="Sand"
+        app:shader_mode="RadialGradient"
+        app:shader_startcolor="@color/bkTransPrimary"
+        app:shader_endcolor="@color/bkTransSecondary"
+        />
+
+    <TextView
+        android:id="@+id/throwaway"
+        android:hint="@string/appname"
+        android:textSize="64sp"
+        android:textColorHint="#DDD"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_margin="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/username" />
+
     <EditText
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:id="@+id/username"
+        android:textColorHint="#DDD"
+        android:hint="@string/namehint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/btn" />
@@ -18,6 +46,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_shape"
         android:layout_margin="16dp"
+        android:text="扔~"
+        android:textSize="24sp"
+        android:textColor="@color/white"
         app:spinning_bar_width="4dp"
         app:spinning_bar_color="#FFF"
         app:spinning_bar_padding="6dp"

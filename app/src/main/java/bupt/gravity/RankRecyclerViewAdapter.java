@@ -43,7 +43,6 @@ public class RankRecyclerViewAdapter extends RecyclerView.Adapter<RankRecyclerVi
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.rank_name.setText(nameDistanceInfos.get(position).getName());
         holder.rank_distance.setText(nameDistanceInfos.get(position).getDistance());
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
